@@ -1,0 +1,84 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description' content='')
+    meta(name='author' content='')
+    title Retro Future
+    //- w3school
+    link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
+    //- Bootstrap
+    link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous')
+    //- Bootstrap core CSS
+    link(href='/vendor/bootstrap/css/bootstrap.min.css' rel='stylesheet')
+    //- Custom fonts for this template
+    link(href='/vendor/fontawesome-free/css/all.min.css' rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i' rel='stylesheet')
+    //- Custom styles for this template
+    link(href='css/grayscale.min.css' rel='stylesheet')
+    link(href='css/grayscale.css' rel='stylesheet')
+
+    link(href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet")
+
+
+    //- Navigation  
+body(style='padding: 10rem 0; background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%), url("/a.jpg"); background-position: center; background-repeat: no-repeat; background-size: cover;')
+    nav#mainNav.navbar.navbar-expand-lg.navbar-light.fixed-top
+        .container
+            a.navbar-brand.js-scroll-trigger(href='/') Retro Future
+            button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+                | Menu
+                i.fas.fa-bars
+            #navbarResponsive.collapse.navbar-collapse
+                ul.navbar-nav.ml-auto
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='#about') Search                                    
+                    if user
+                        li.nav-item
+                            a.nav-link.js-scroll-trigger(href='/addPosts') Write  
+                        li.nav-item
+                            a.nav-link.js-scroll-trigger(href='/postsList') Posts
+                        li.nav-item
+                            a.nav-link.js-scroll-trigger(href='/follow') Follow
+                        li.nav-item
+                            a.nav-link.js-scroll-trigger(href='/scrapsList') Cart                   
+                        li.nav-item
+                            a.nav-link.js-scroll-trigger(href='/profile') Mypage                
+                        li.nav-item
+                            a.nav-link.js-scroll-trigger(href='/auth/logout') Logout
+                    else
+                        li.nav-item
+                            a.nav-link.js-scroll-trigger(href='/addPosts' onclick='login()') Write  
+                        li.nav-item
+                            a.nav-link.js-scroll-trigger(href='/postsList' onclick='login()') Posts
+                        li.nav-item
+                            a.nav-link.js-scroll-trigger(href='/scrapsList' onclick='login()') Cart
+        // About Section
+section#about.about-section.text-center(style='margin-top: 5%;')
+    .container
+        //- About Section
+        .twits
+            section#about.about-section.text-center
+                .container
+                for twit in twits
+                    .twit
+                        .w3-third.w3-container.w3-margin-bottom
+                            if twit.img
+                                .twit-img
+                                    img.w3-hover-opacity(src=twit.img alt='섬네일' style='width:100%; height: 400px;')
+                            else
+                                .twit-img
+                                    img.w3-hover-opacity(src='img/default.png' alt='섬네일' style='width:100%; height: 400px;')
+                            .w3-container.w3-white(style="height:150px;font-family: 'Nanum Gothic';")
+                                .twit-author= twit.user.nick
+                                br
+                                b
+                                .twit-title= twit.title
+                                b
+                                .twit-content= twit.content
+                            br
+                            a.btn.btn-primary.mx-auto(href="/postsDetail?id="+twit.id style="background-color:rgba(85, 85, 85, 0.9);border-radius: 10px;font-family: 'Nanum Gothic';font-weight: bold;padding: 1.25rem 2rem;font-size: 80%;text-transf padd.15rem;border: 0;") POST DETAIL
+
+                            

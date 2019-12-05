@@ -1,0 +1,123 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description' content='')
+    meta(name='author' content='')
+    title Retro Future
+    //- w3school
+    link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
+    //- Bootstrap
+    link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous')
+    //- Bootstrap core CSS
+    link(href='vendor/bootstrap/css/bootstrap.min.css' rel='stylesheet')
+    //- Custom fonts for this template
+    link(href='vendor/fontawesome-free/css/all.min.css' rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i' rel='stylesheet')
+    //- Custom styles for this template
+    link(href='css/grayscale.min.css' rel='stylesheet')
+    link(href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet")
+//- Bootstrap core JavaScript
+script(src='vendor/jquery/jquery.min.js')
+script(src='vendor/bootstrap/js/bootstrap.bundle.min.js')
+//- Plugin JavaScript
+script(src='vendor/jquery-easing/jquery.easing.min.js')
+//- Bootstrap
+script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+script(src='js/web3.min.js')
+script(src='js/truffle-contract.js')
+script(src='js/buyerapp.js')
+script(src='js/utf8.js')
+    //- Navigation
+nav#mainNav.navbar.navbar-expand-lg.navbar-light.fixed-top
+    .container
+        a.navbar-brand.js-scroll-trigger(href='/') Retro Future
+        button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+            | Menu
+            i.fas.fa-bars
+        #navbarResponsive.collapse.navbar-collapse
+            ul.navbar-nav.ml-auto
+                li.nav-item
+                    a.nav-link.js-scroll-trigger(href='/#about') Search
+                if user
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/addPosts') Write  
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/postsList') Posts
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/follow') Follow
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/scrapsList') Cart                         
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/profile') MyPage
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/auth/logout') Logout
+                else
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/addPosts' onclick='login()') Write  
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/postsList' onclick='login()') Posts
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/scrapsList' onclick='login()') Cart
+    
+body(style="font-family: 'Nanum Gothic';")
+    //- Header
+    header.masthead
+        .container.d-flex.h-200.align-items-center
+            .mx-auto.text-center
+                h1(style='margin-bottom:60px')
+                table(border=0.5)(style="background-color:rgba(255, 255, 255, 0.7);border-radius:10px;align-items:center;margin:auto;font-family: 'Nanum Gothic';")
+                    tr
+                        th(style='padding-left:20px;padding-right:20px;padding-top:5px;') 번호
+                        td #{postsDetail.id}
+                    tr
+                        th(style='padding-left:20px;padding-right:20px;padding-top:5px;') 제목
+                        td #{postsDetail.title}
+                    tr
+                        th(style='padding-left:20px;padding-right:20px;padding-top:10px;') 사진
+                        td 
+                            if postsDetail.img
+                                img(src=postsDetail.img alt='상세보기' style='height:330px; margin-right:10px;')
+                    tr
+                        th(style='padding-left:20px;padding-right:20px;padding-top:5px;') 내용
+                        td #{postsDetail.content}
+                    tr
+                        th(style='padding-left:20px;padding-right:20px;padding-top:5px;') 작성자
+                        td #{postsDetail.nick}
+                    tr
+                        th(style='padding-left:20px;padding-right:20px;padding-top:5px;') 가격
+                        td #{postsDetail.price} ETH
+                    tr
+                        th(style='padding-left:20px;padding-right:20px;padding-top:5px;padding-bottom:5px;') 날짜
+                        td(style='padding-right:20px;') #{postsDetail.updatedAt}    
+                div(style='margin-top: 1%;')
+                    a.btn.btn-primary.js-scroll-trigger(href="postsList" style='margin-right: 3px;') POSTLIST
+                
+                    if user.nick == postsDetail.nick
+                        a.btn.btn-primary.js-scroll-trigger(href="updatePosts?id="+postsDetail.id style='margin-right: 3px;') UPDATE
+                        a.btn.btn-primary.js-scroll-trigger(href="deletePosts?id="+postsDetail.id style='margin-right: 3px;') DELETE
+                    else
+                        a.btn.btn-primary.js-scroll-trigger(href="scrapPosts?id="+postsDetail.id style='margin-right: 3px;') CART
+                        a.btn.btn-primary.js-scroll-trigger(href="#" style='margin-right: 3px;' onclick='App.buyerAccounts()' name='buyeraccount') CheckBuy
+                        //button#twit-btn.btn(type='button' onclick='App.buyerAccounts()' name='buyeraccount' style='margin-right: 3px;') checkbuy
+                        a.btn.btn-primary.js-scroll-trigger(href="#" style='margin-right: 3px;' onclick='App.Dobuythings()') BUYNOW
+                        p#buyeraccount
+                        p#selleraccount
+
+//-자바스크립트
+script.
+    function seller(){
+        var selleraccount = "#{postsDetail.account}";
+        alert("#{postsDetail.account}", selleraccount);
+        console.log("seller의 selleraccount : " , selleraccount);
+    }
+//-자바스크립트
+script.
+    function buyer(){
+        var buyeraccount = "#{postsDetail.account}";
+        alert("#{postsDetail.account}", buyeraccount);
+        console.log("buyer의 buyeraccount : " , buyeraccount);
+    }

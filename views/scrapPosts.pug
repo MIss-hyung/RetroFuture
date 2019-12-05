@@ -1,0 +1,89 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description' content='')
+    meta(name='author' content='')
+    title Retro Future
+    //- w3school
+    link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
+    //- Bootstrap
+    link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous')
+    //- Bootstrap core CSS
+    link(href='vendor/bootstrap/css/bootstrap.min.css' rel='stylesheet')
+    //- Custom fonts for this template
+    link(href='vendor/fontawesome-free/css/all.min.css' rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i' rel='stylesheet')
+    //- Custom styles for this template
+    link(href='css/grayscale.min.css' rel='stylesheet')
+    //- Navigation
+nav#mainNav.navbar.navbar-expand-lg.navbar-light.fixed-top
+    .container
+        a.navbar-brand.js-scroll-trigger(href='/') Retro Future
+        button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+            | Menu
+            i.fas.fa-bars
+        #navbarResponsive.collapse.navbar-collapse
+            ul.navbar-nav.ml-auto
+                li.nav-item
+                    a.nav-link.js-scroll-trigger(href='/#about') Search
+                if user
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/addPosts') Write  
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/postsList') Posts
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/follow') Follow   
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/scrapsList') Cart                          
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/profile') MyPage
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/auth/logout') Logout
+                else
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/addPosts' onclick='login()') Write  
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/postsList' onclick='login()') Posts
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/scrapsList' onclick='login()') Cart
+        
+
+
+
+section.masthead.text-center
+    .container
+        .row
+            .col-md-9(style='margin-top:20%;')
+                form(action="scrapPosts" method="post" style='margin-left:35%;border-radius:10px;width:70%;background-color:rgba(255, 255, 255, 0.7)')
+                    table.table.table-list-search
+                        tr
+                            th 번호
+                            td
+                                input(type="text" name="id" value=`${scrapPosts.id}` readonly style='padding:5px;border-radius:5px; border:0;')
+                        tr
+                            th 이미지
+                            td
+                                input(type="text" name="img" value=`${scrapPosts.img}` readonly style='padding:5px;border-radius:5px; border:0;')
+                        tr
+                            th 제목
+                            td
+                                input(type="text" name="title" value=`${scrapPosts.title}` readonly style='padding:5px;border-radius:5px; border:0;')
+                        tr
+                            th 가격
+                            td
+                                input(type="text" name="price" value=`${scrapPosts.price} ETH` readonly style='padding:5px;border-radius:5px; border:0;')
+                        tr
+                            th 내용
+                            td
+                                input(type="text" name="content" value=`${scrapPosts.content}` readonly style='padding:5px;border-radius:5px; border:0;')
+                        tr
+                            th 작성자
+                            td
+                                input(type="text" name="nick" value=`${scrapPosts.nick}` readonly)
+                        tr
+                            th 조회수
+                            td
+                                input(type="text" name="hit" value=`${scrapPosts.hit}` readonly)
+                    button.btn.btn-primary(type='submit' style='margin-bottom:20px') Cart

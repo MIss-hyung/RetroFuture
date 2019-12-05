@@ -1,0 +1,183 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description' content='')
+    meta(name='author' content='')
+    title Retro Future
+    //- w3school
+    link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
+    //- Bootstrap
+    link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous')
+    //- Bootstrap core CSS
+    link(href='vendor/bootstrap/css/bootstrap.min.css' rel='stylesheet')
+    //- Custom fonts for this template
+    link(href='vendor/fontawesome-free/css/all.min.css' rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i' rel='stylesheet')
+    //- Custom styles for this template
+    link(href='css/grayscale.min.css' rel='stylesheet')
+    //- Navigation
+nav#mainNav.navbar.navbar-expand-lg.navbar-light.fixed-top
+    .container
+        a.navbar-brand.js-scroll-trigger(href='/') Retro Future
+        button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+            | Menu
+            i.fas.fa-bars
+        #navbarResponsive.collapse.navbar-collapse
+            ul.navbar-nav.ml-auto
+                li.nav-item
+                    a.nav-link.js-scroll-trigger(href='/#about') Search
+                if user
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/addPosts') Write  
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/postsList') Posts
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/follow') Follow                       
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/profile') MyPage
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/auth/logout') Logout
+                else
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/addPosts' onclick='login()') Write  
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/postsList' onclick='login()') Posts
+                    li.nav-item
+                        a.nav-link.js-scroll-trigger(href='/scrapsList' onclick='login()') Scrap
+    
+body
+    //- Header
+    header.masthead
+        .container.d-flex.h-100.align-items-center
+            .mx-auto.text-center
+                h1.mx-auto.my-0.text-uppercase Retro Future
+                h2.text-white-50.mx-auto.mt-2.mb-5 The coexistence of the past and the future!
+                form(action='/auth/login' method='post')
+                    .form-group
+                        label(for='email') Email address
+                        input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email' name='email' required autofocus)
+                        small#emailHelp.form-text.text-muted We&apos;ll never share your email with anyone else.
+                    .form-group
+                        label(for='password') Password
+                        input#exampleInputPassword1.form-control(type='password' placeholder='Password' name='password' required)
+                    button.btn.btn-primary(type='submit') Submit
+                    a.btn.btn-primary(href="/join" style="margin-left:20px;") Join Us!
+    
+    //- Bootstrap core JavaScript
+    script(src='vendor/jquery/jquery.min.js')
+    script(src='vendor/bootstrap/js/bootstrap.bundle.min.js')
+    //- Plugin JavaScript
+    script(src='vendor/jquery-easing/jquery.easing.min.js')
+    //- Custom scripts for this template
+    script(src='js/grayscale.min.js')
+    //- Bootstrap
+    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+
+    //- 자바스크립트
+    script.
+        if (document.getElementById('img')) {
+        document.getElementById('img').addEventListener('change', function (e) {
+            var formData = new FormData();
+            console.log(this, this.files);
+            formData.append('img', this.files[0]);
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+            if (xhr.status === 200) {
+                var url = JSON.parse(xhr.responseText).url;
+                document.getElementById('img-url').value = url;
+                document.getElementById('img-preview').src = url;
+                document.getElementById('img-preview').style.display = 'inline';
+            } else {
+                console.error(xhr.responseText);
+            }
+            };
+            xhr.open('POST', '/post/img');
+            xhr.send(formData);
+        });
+        }
+        [].forEach.call(document.querySelectorAll('.twit-follow'), function (tag) {
+        tag.addEventListener('click', function () {
+            var isLoggedIn = document.querySelector('#my-id');
+            if (isLoggedIn) {
+            var userId = tag.parentNode.querySelector('.twit-user-id').value;
+            var myId = isLoggedIn.value;
+            if (userId !== myId) {
+                if (confirm('팔로잉하시겠습니까?')) {
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                    location.reload();
+                    } else {
+                    console.error(xhr.responseText);
+                    }
+                };
+                xhr.open('POST', '/user/' + userId + '/follow');
+                xhr.send();
+                }
+            }
+            }
+        });
+        });
+        [].forEach.call(document.querySelectorAll('.twit-unfollow'), function (tag) {
+        tag.addEventListener('click', function () {
+            var isLoggedIn = document.querySelector('#my-id');
+            if (isLoggedIn) {
+            var userId = tag.parentNode.querySelector('.twit-user-id').value;
+            var myId = isLoggedIn.value;
+            if (userId !== myId) {
+                if (confirm('팔로잉 끊으시겠습니까?')) {
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                    location.reload();
+                    } else {
+                    console.error(xhr.responseText);
+                    }
+                };
+                xhr.open('POST', '/user/' + userId + '/unfollow');
+                xhr.send();
+                }
+            }
+            }
+        });
+        });
+        [].forEach.call(document.querySelectorAll('.like'), function (tag) {
+        tag.addEventListener('click', function () {
+            var isLoggedIn = document.querySelector('#my-id');
+            var twitId = tag.parentNode.querySelector('.twit-id').value;
+            if (isLoggedIn) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                location.reload();
+                } else {
+                console.error(xhr.responseText);
+                }
+            };
+            xhr.open('POST', '/post/' + twitId + '/like');
+            xhr.send();
+            }
+        });
+        });
+        [].forEach.call(document.querySelectorAll('.unlike'), function (tag) {
+        tag.addEventListener('click', function () {
+            var isLoggedIn = document.querySelector('#my-id');
+            var twitId = tag.parentNode.querySelector('.twit-id').value;
+            if (isLoggedIn) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                location.reload();
+                } else {
+                console.error(xhr.responseText);
+                }
+            };
+            xhr.open('DELETE', '/post/' + twitId + '/like');
+            xhr.send();
+            }
+        });
+        });
